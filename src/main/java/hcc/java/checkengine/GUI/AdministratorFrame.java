@@ -1,4 +1,4 @@
-package hcc.java.checkengine;
+package hcc.java.checkengine.GUI;
 
 import javax.swing.*;
 import java.awt.*;
