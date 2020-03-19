@@ -1,4 +1,6 @@
-package hcc.java.checkengine;
+package hcc.java.checkengine.GUI;
+
+import hcc.java.checkengine.GUI.AdministratorFrame;
 
 import javax.swing.*;
 import java.awt.*;
