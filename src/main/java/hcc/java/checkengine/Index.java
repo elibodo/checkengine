@@ -2,6 +2,7 @@ package hcc.java.checkengine;
 
 import hcc.java.checkengine.Models.IndexEntry;
 import hcc.java.checkengine.Models.IndexFile;
+import hcc.java.checkengine.Utilities.DataAccess;
 import javafx.util.Pair;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,6 +31,7 @@ public class Index {
         }
         indexFiles.add(indexFile);
         generateIndex();
+        DataAccess.writeIndex(this);
     }
 
     public void removeFile() { }
