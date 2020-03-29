@@ -97,6 +97,23 @@ public class AdministratorFrame {
                 System.out.println("Removing file to index...");
             }
         });
+
+        regenerateIndexMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                index.regenerateIndex();
+                refreshTable();
+            }
+        });
+    }
+
+    private void refreshTable() {
+        frame.remove(scrollPane);
+        tableData = getTableData();
+        indexTable = new JTable(tableData, columnNames);
+        scrollPane = new JScrollPane(indexTable);
+        scrollPane.setBounds(50, 75, 600, 300);
+        frame.add(scrollPane);
     }
 
     private String[][] getTableData() {
