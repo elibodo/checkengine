@@ -34,7 +34,15 @@ public class Index {
         DataAccess.writeIndex(this);
     }
 
-    public void removeFile() { }
+    public void removeFile(IndexFile indexFile) {
+        for (IndexFile file : indexFiles) {
+            if (file.getFilePath().equals(indexFile.getFilePath())) {
+                indexFiles.remove(indexFile);
+                generateIndex();
+                DataAccess.writeIndex(this);
+            }
+        }
+    }
 
     public void generateIndex() {
 
