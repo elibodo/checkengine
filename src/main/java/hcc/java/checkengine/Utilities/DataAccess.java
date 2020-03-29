@@ -34,6 +34,7 @@ public class DataAccess {
             Gson gson = new Gson();
             index = gson.fromJson(jsonReader, Index.class);
         }
+        index.updateFileStatus();
         return index;
     }
 }

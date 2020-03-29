@@ -1,5 +1,6 @@
 package hcc.java.checkengine;
 
+import hcc.java.checkengine.Models.FileStatus;
 import hcc.java.checkengine.Models.IndexEntry;
 import hcc.java.checkengine.Models.IndexFile;
 import hcc.java.checkengine.Utilities.DataAccess;
@@ -23,6 +24,17 @@ public class Index {
         return indexEntries;
     }
 
+    public void updateFileStatus() {
+        for (IndexFile indexFile : indexFiles) {
+            File file = new File(indexFile.getFilePath());
+            if (indexFile.getLastModifiedTime() != file.lastModified()) {
+                indexFile.setFileStatus(FileStatus.Out_Of_Date);
+            } else {
+                indexFile.setFileStatus(FileStatus.Indexed);
+            }
+        }
+    }
+
     public void addFile(IndexFile indexFile) {
         for (IndexFile file : indexFiles) {
             if (file.getFilePath().equals(indexFile.getFilePath())) {
@@ -31,7 +43,6 @@ public class Index {
         }
         indexFiles.add(indexFile);
         generateIndex();
-        DataAccess.writeIndex(this);
     }
 
     public void removeFile(IndexFile indexFile) {
@@ -39,9 +50,19 @@ public class Index {
             if (file.getFilePath().equals(indexFile.getFilePath())) {
                 indexFiles.remove(indexFile);
                 generateIndex();
-                DataAccess.writeIndex(this);
             }
         }
+    }
+
+    public void regenerateIndex() {
+        for (IndexFile indexFile : indexFiles) {
+            if (indexFile.getFileStatus() == FileStatus.Out_Of_Date) {
+                File file = new File(indexFile.getFilePath());
+                indexFile.setLastModifiedTime(file.lastModified());
+                indexFile.setFileStatus(FileStatus.Indexed);
+            }
+        }
+        generateIndex();
     }
 
     public void generateIndex() {
@@ -63,6 +84,7 @@ public class Index {
                 System.out.println(ex.getMessage());
             }
         }
+        DataAccess.writeIndex(this);
     }
 
     private void indexWord(String word, Pair<Integer, Integer> fileWordIndexPair) {
