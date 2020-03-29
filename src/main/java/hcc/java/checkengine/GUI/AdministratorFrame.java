@@ -105,6 +105,14 @@ public class AdministratorFrame {
                 refreshTable();
             }
         });
+
+        exitMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.dispose();
+                isOpen = false;
+            }
+        });
     }
 
     private void refreshTable() {
