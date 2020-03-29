@@ -1,19 +1,15 @@
 package hcc.java.checkengine.Models;
 
 public class IndexFile {
-    private static int nextID = 0;
     private int id;
     private String filePath;
     private long lastModifiedTime;
     private FileStatus fileStatus;
 
-    {
-        id = nextID++;
-    }
-
-    public IndexFile(String filePath, long lastModifiedTime) {
+    public IndexFile(String filePath, long lastModifiedTime, int lastId) {
         this.filePath = filePath;
         this.lastModifiedTime = lastModifiedTime;
+        this.id = ++lastId;
         fileStatus = FileStatus.Indexed;
     }
 

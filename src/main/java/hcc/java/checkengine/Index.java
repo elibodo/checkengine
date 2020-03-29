@@ -8,8 +8,10 @@ import javafx.util.Pair;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Index {
 
@@ -22,6 +24,14 @@ public class Index {
 
     public List<IndexEntry> getIndexEntries() {
         return indexEntries;
+    }
+
+    public int getLastId() {
+        var ids = indexFiles.stream().map(IndexFile::getId).collect(Collectors.toList());
+        if (ids.size() > 0) {
+            return Collections.max(ids);
+        }
+        return 0;
     }
 
     public void updateFileStatus() {
@@ -45,13 +55,9 @@ public class Index {
         generateIndex();
     }
 
-    public void removeFile(IndexFile indexFile) {
-        for (IndexFile file : indexFiles) {
-            if (file.getFilePath().equals(indexFile.getFilePath())) {
-                indexFiles.remove(indexFile);
-                generateIndex();
-            }
-        }
+    public void removeFile(String filePath) {
+        indexFiles.removeIf(x -> x.getFilePath().equals(filePath));
+        generateIndex();
     }
 
     public void regenerateIndex() {
