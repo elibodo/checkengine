@@ -32,4 +32,12 @@ public class IndexFile {
     public FileStatus getFileStatus() {
         return fileStatus;
     }
+
+    public void setLastModifiedTime(long lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    public void setFileStatus(FileStatus fileStatus) {
+        this.fileStatus = fileStatus;
+    }
 }
